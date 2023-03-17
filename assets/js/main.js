@@ -26,16 +26,29 @@ const sections = document.querySelectorAll('section[id]')
 
 function scrollActive() {
     const scrollY = window.pageYOffset
-
     sections.forEach(current => {
         const sectionHeight = current.offsetHeight
         const sectionTop = current.offsetTop - 50;
-        sectionId = current.getAttribute('id')
+        const sectionId = current.getAttribute('id');
 
         if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.add('active')
+            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.add('active');
+            //console.log('add' + sectionId + 'active');
         } else {
-            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.remove('active')
+            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.remove('active');
+            //console.log('remove ' + sectionId + 'active');
+        }
+        // Check if user has scrolled to the bottom of the page
+        if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
+            //console.log('new' + 'active');
+
+            //all element active class remove
+            const elements = document.querySelectorAll('.nav__menu a');
+            elements.forEach((element) => {
+                element.classList.remove('active');
+            });
+            //add last item active class
+            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.add('active');
         }
     })
 }
@@ -53,43 +66,4 @@ const sr = ScrollReveal({
 sr.reveal('.home__data, .about__img, .skills__subtitle, .skills__text', {});
 sr.reveal('.home__img, .about__subtitle, .about__text, .skills__img', { delay: 400 });
 sr.reveal('.home__social-icon', { interval: 200 });
-sr.reveal('.skills__data, .work__img, .contact__input', { interval: 200 });
-
-
-// if ($('#owl-carousel').length) {
-//     $('#owl-carousel').owlCarousel({
-//         items: 1,
-//         loop: false,
-//         nav: true
-//     });
-// }
-// if ($('.news_slider').length) {
-//     $('.news_slider').owlCarousel({
-//         autoPlay: true,
-//         slideTransition: 'linear',
-//         autoplayTimeout: 0,
-//         autoplaySpeed: 8000,
-//         animateIn: 'linear',
-//         animateOut: 'linear',
-//         autoplay: true,
-//         responsive: {
-//             0: {
-//                 items: 1,
-//                 nav: false,
-//                 margin: 15
-//             },
-
-//             750: {
-//                 items: 2,
-//                 margin: 24,
-//                 nav: true,
-//             },
-
-//             1366: {
-//                 items: 3,
-//                 margin: 20,
-//                 nav: true
-//             }
-//         }
-//     })
-// }
+sr.reveal('.skills__data, .work__img, .contact__input', { interval: 200 }); 
